@@ -2,7 +2,6 @@ package edu.java.bot.service.commands;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import static edu.java.bot.util.TextMessages.START_COMMAND;
 import static edu.java.bot.util.TextMessages.START_COMMAND_DESCRIPTION;

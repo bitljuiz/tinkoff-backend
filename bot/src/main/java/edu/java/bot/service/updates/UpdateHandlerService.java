@@ -3,9 +3,9 @@ package edu.java.bot.service.updates;
 import edu.java.bot.chain.Handler;
 import edu.java.bot.repository.LinkRepository;
 import edu.java.bot.repository.RepositoryData;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class UpdateHandlerService {

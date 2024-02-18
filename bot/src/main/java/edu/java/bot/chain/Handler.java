@@ -2,7 +2,6 @@ package edu.java.bot.chain;
 
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.logging.Logger;
 import static edu.java.bot.util.TextMessages.UPDATE_MESSAGE;
 

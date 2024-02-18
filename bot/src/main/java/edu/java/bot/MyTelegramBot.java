@@ -10,9 +10,9 @@ import com.pengrad.telegrambot.request.SetMyCommands;
 import com.pengrad.telegrambot.response.BaseResponse;
 import edu.java.bot.configuration.ApplicationConfig;
 import edu.java.bot.processor.UserMessageProcessor;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import java.util.List;
 
 @Component
 public class MyTelegramBot implements Bot {
@@ -43,7 +43,6 @@ public class MyTelegramBot implements Bot {
     @Override
     public int process(List<Update> updates) {
         for (Update update : updates) {
-            System.out.println(update.message().text());
             SendMessage response = msgProcessor.process(update);
 
             if (response != null) {

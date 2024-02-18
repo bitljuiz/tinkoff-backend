@@ -32,15 +32,15 @@ public class UntrackCommand implements Command {
     @Override
     public SendMessage handle(Update update) {
         Long chatId = update.message().chat().id();
-        String[] message_parts = update.message().text().split("\\s+", 2);
+        String[] messageParts = update.message().text().split("\\s+", 2);
 
-        if (message_parts.length < 2) {
+        if (messageParts.length < 2) {
             return new SendMessage(chatId, INVALID_FORMAT_UNTRACK_MESSAGE);
         }
 
-        if (repository.removeData(new RepositoryData(chatId, message_parts[1]))) {
-            return new SendMessage(chatId, SUCCESSFUL_UNTRACK_MESSAGE + message_parts[1]);
+        if (repository.removeData(new RepositoryData(chatId, messageParts[1]))) {
+            return new SendMessage(chatId, SUCCESSFUL_UNTRACK_MESSAGE + messageParts[1]);
         }
-        return new SendMessage(chatId, INVALID_UNTRACK_MESSAGE + message_parts[1]);
+        return new SendMessage(chatId, INVALID_UNTRACK_MESSAGE + messageParts[1]);
     }
 }
