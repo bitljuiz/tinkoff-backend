@@ -3,14 +3,15 @@ package edu.java.bot.service.commands;
 import com.pengrad.telegrambot.model.Chat;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
+import edu.java.bot.chain.GithubHandler;
+import edu.java.bot.chain.Handler;
+import edu.java.bot.chain.StackOverflowHandler;
 import edu.java.bot.repository.LinkRepository;
 import edu.java.bot.service.updates.UpdateHandlerService;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.Mock;
 import static org.mockito.Mockito.when;
 
 public abstract class CommandTestInit {
@@ -33,6 +34,14 @@ public abstract class CommandTestInit {
 
     @BeforeEach
     public void init() {
+        linkRepository = new LinkRepository();
+        List<Handler> handlerList = List.of(
+            new GithubHandler(),
+            new StackOverflowHandler()
+        );
+
+        updateHandlerService = new UpdateHandlerService(handlerList);
+
         when(update.message()).thenReturn(message);
         when(message.chat()).thenReturn(chat);
         when(chat.id()).thenReturn(chatId);

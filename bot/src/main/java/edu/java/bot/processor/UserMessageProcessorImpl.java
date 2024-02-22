@@ -5,11 +5,11 @@ import com.pengrad.telegrambot.request.SendMessage;
 import edu.java.bot.service.commands.Command;
 import java.util.List;
 import org.springframework.stereotype.Component;
-import static edu.java.bot.util.TextMessages.INVALID_COMMAND_MESSAGE;
 
 @Component
 public class UserMessageProcessorImpl implements UserMessageProcessor {
     private final List<Command> commands;
+    private final String INVALID_COMMAND_MESSAGE = "I don't know the command ";
 
     public UserMessageProcessorImpl(List<Command> commands) {
         this.commands = commands;
@@ -27,6 +27,6 @@ public class UserMessageProcessorImpl implements UserMessageProcessor {
                 return command.handle(update);
             }
         }
-        return new SendMessage(update.message().chat().id(), INVALID_COMMAND_MESSAGE);
+        return new SendMessage(update.message().chat().id(), INVALID_COMMAND_MESSAGE + update.message().text());
     }
 }

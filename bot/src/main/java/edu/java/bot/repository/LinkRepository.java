@@ -1,32 +1,53 @@
 package edu.java.bot.repository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-@Repository
+@Service
 public class LinkRepository {
-    private final Map<Long, ArrayList<String>> links;
+    private static final String[] WEBPAGE_HATS = {
+        "",
+        "https://",
+    };
+    private final Map<Long, HashSet<String>> links;
 
     public LinkRepository() {
         links = new HashMap<>();
     }
 
-    public boolean addData(RepositoryData data) {
-        return links.computeIfAbsent(data.chatId(), val -> new ArrayList<>()).add(data.link());
+    public boolean addData(Long chatId, String link) {
+        return links.get(chatId).add(link);
     }
 
-    public boolean removeData(RepositoryData data) {
-        if (links.containsKey(data.chatId())) {
-            return links.get(data.chatId()).remove(data.link());
+    public boolean registerId(Long chatId) {
+        if (links.containsKey(chatId))
+            return false;
+        links.computeIfAbsent(chatId, val -> new HashSet<>());
+        return true;
+    }
+
+    public boolean removeData(Long chatId, String link) {
+        boolean wasDeleted = false;
+        if (links.containsKey(chatId)) {
+            for (String hat : WEBPAGE_HATS) {
+                if (!wasDeleted) {
+                    String newLink = hat + link;
+                    wasDeleted = links.get(chatId).remove(newLink);
+                }
+            }
         }
-        return false;
+        return wasDeleted;
     }
 
-    public ArrayList<String> getData(Long chatId) {
-        if (!links.containsKey(chatId)) {
-            return new ArrayList<>();
+    public boolean containsId(Long chatId) {
+        return links.containsKey(chatId);
+    }
+
+    public HashSet<String> getData(Long chatId) throws Exception {
+        if (!containsId(chatId)) {
+            throw new Exception();
         }
         return links.get(chatId);
     }

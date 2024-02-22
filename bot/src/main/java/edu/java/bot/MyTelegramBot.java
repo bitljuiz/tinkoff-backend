@@ -25,11 +25,11 @@ public class MyTelegramBot implements Bot {
         this.telegramBot = new TelegramBot(config.telegramToken());
         this.telegramBot.execute(
             new SetMyCommands(
-                    this.msgProcessor.commands()
-                        .stream()
-                        .map(
-                            command -> new BotCommand(command.command(), command.description()))
-                        .toArray(BotCommand[]::new)
+                this.msgProcessor.commands()
+                    .stream()
+                    .map(
+                        command -> new BotCommand(command.command(), command.description()))
+                    .toArray(BotCommand[]::new)
             )
         );
         start();
@@ -43,10 +43,12 @@ public class MyTelegramBot implements Bot {
     @Override
     public int process(List<Update> updates) {
         for (Update update : updates) {
-            SendMessage response = msgProcessor.process(update);
+            if (update.message() != null) {
+                SendMessage response = msgProcessor.process(update);
 
-            if (response != null) {
-                execute(response);
+                if (response != null) {
+                    execute(response);
+                }
             }
         }
         return UpdatesListener.CONFIRMED_UPDATES_ALL;

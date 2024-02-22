@@ -1,44 +1,31 @@
 package edu.java.bot.service.updates;
 
 import edu.java.bot.chain.Handler;
-import edu.java.bot.repository.LinkRepository;
-import edu.java.bot.repository.RepositoryData;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UpdateHandlerService {
+    private static final String[] WEBPAGE_HATS = {
+        "",
+        "https://",
+    };
     private final List<Handler> handlerList;
-    private final LinkRepository repository;
 
-    @Autowired
-    public UpdateHandlerService(List<Handler> handlerList, LinkRepository repository) {
+    public UpdateHandlerService(List<Handler> handlerList) {
         this.handlerList = handlerList;
-        this.repository = repository;
     }
 
-    public boolean dataIsValid(Long chatId, String link) {
-        if (isValid(link)) {
-            return repository.addData(new RepositoryData(chatId, link));
-        }
-        return false;
-    }
-
-    private boolean isValid(String link) {
-        for (Handler handler : handlerList) {
-            if (handler.linkExists(link) && handler.linkHasDomain(link)) {
-                return true;
+    public String isValid(String link) {
+        String newLink;
+        for (String hat : WEBPAGE_HATS) {
+            newLink = hat + link;
+            for (Handler handler : handlerList) {
+                if (handler.linkExists(newLink) && handler.linkHasDomain(newLink)) {
+                    return newLink;
+                }
             }
         }
-        return false;
-    }
-
-    private void getUpdate(String link) {
-        for (Handler handler : handlerList) {
-            if (handler.hasUpdate(link)) {
-                handler.getUpdate(link);
-            }
-        }
+        return null;
     }
 }
