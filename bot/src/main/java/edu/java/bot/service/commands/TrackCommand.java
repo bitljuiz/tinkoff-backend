@@ -15,7 +15,7 @@ public class TrackCommand implements Command {
     private final String invalidFormatTrackMessage =
         "Invalid link. Try, for example " + trackCommand + " github.com";
     private final String invalidTrackMessage = "Cannot find webpage by the link: ";
-    public static final String IS_NOT_REGISTERED = "You are not registered." + System.lineSeparator()
+    public final String isNotRegistered = "You are not registered." + System.lineSeparator()
         + "Use /start to register.";
     private final UpdateHandlerService updateHandlerService;
     private final LinkRepository linkRepository;
@@ -41,7 +41,7 @@ public class TrackCommand implements Command {
         String[] messageParts = update.message().text().split("\\s+", 2);
 
         if (!linkRepository.containsId(chatId)) {
-            return new SendMessage(chatId, IS_NOT_REGISTERED);
+            return new SendMessage(chatId, isNotRegistered);
         }
 
         String newLink = updateHandlerService.isValid(messageParts[1]);

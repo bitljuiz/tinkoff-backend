@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class StartCommand implements Command {
-    private static final String START_COMMAND = "/start";
-    private static final String START_COMMAND_DESCRIPTION = "is used to register an user";
-    private static final String IS_ALREADY_REGISTERED = "You are already registered!";
+    private final String startCommand = "/start";
+    private final String startCommandDescription = "is used to register an user";
+    private final String isAlreadyRegistered = "You are already registered!";
 
-    private static final String SUCCESSFUL_START_COMMAND_MESSAGE = "Successfully registered!";
+    private final String successfulStartCommandMessage = "Successfully registered!";
     private final LinkRepository linkRepository;
 
     public StartCommand(LinkRepository linkRepository) {
@@ -20,19 +20,19 @@ public class StartCommand implements Command {
 
     @Override
     public String command() {
-        return START_COMMAND;
+        return startCommand;
     }
 
     @Override
     public String description() {
-        return START_COMMAND_DESCRIPTION;
+        return startCommandDescription;
     }
 
     @Override
     public SendMessage handle(Update update) {
         if (linkRepository.registerId(update.message().chat().id())) {
-            return new SendMessage(update.message().chat().id(), SUCCESSFUL_START_COMMAND_MESSAGE);
+            return new SendMessage(update.message().chat().id(), successfulStartCommandMessage);
         }
-        return new SendMessage(update.message().chat().id(), IS_ALREADY_REGISTERED);
+        return new SendMessage(update.message().chat().id(), isAlreadyRegistered);
     }
 }

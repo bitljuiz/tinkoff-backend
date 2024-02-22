@@ -13,8 +13,8 @@ public class ListCommand implements Command {
     private final String listCommand = "/list";
     private final String listCommandDescription = "shows a list of currently tracking links";
 
-    public static final String SUCCESSFUL_LIST_MESSAGE = "Links that are tracking now: " + System.lineSeparator();
-    public static final String INVALID_LIST_MESSAGE = "You are not tracking any link now" + System.lineSeparator();
+    public final String successfulListMessage = "Links that are tracking now: " + System.lineSeparator();
+    public final String invalidListMessage = "You are not tracking any link now" + System.lineSeparator();
 
     public static final String IS_NOT_REGISTERED = "You are not registered." + System.lineSeparator()
         + "Use /start to register.";
@@ -47,8 +47,8 @@ public class ListCommand implements Command {
         StringBuilder linksInList = new StringBuilder();
         if (!links.isEmpty()) {
             links.forEach(link -> linksInList.append(link).append(System.lineSeparator()));
-            return new SendMessage(chatId, SUCCESSFUL_LIST_MESSAGE + linksInList);
+            return new SendMessage(chatId, successfulListMessage + linksInList);
         }
-        return new SendMessage(chatId, INVALID_LIST_MESSAGE);
+        return new SendMessage(chatId, invalidListMessage);
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LinkRepository {
-    private static final String[] WEBPAGE_HATS = {
+    private final String[] webpageHats = {
         "",
         "https://",
     };
@@ -32,7 +32,7 @@ public class LinkRepository {
     public boolean removeData(Long chatId, String link) {
         boolean wasDeleted = false;
         if (links.containsKey(chatId)) {
-            for (String hat : WEBPAGE_HATS) {
+            for (String hat : webpageHats) {
                 if (!wasDeleted) {
                     String newLink = hat + link;
                     wasDeleted = links.get(chatId).remove(newLink);

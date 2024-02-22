@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UpdateHandlerService {
-    private static final String[] WEBPAGE_HATS = {
+    private final String[] webpageHats = {
         "",
         "https://",
     };
@@ -18,7 +18,7 @@ public class UpdateHandlerService {
 
     public String isValid(String link) {
         String newLink;
-        for (String hat : WEBPAGE_HATS) {
+        for (String hat : webpageHats) {
             newLink = hat + link;
             for (Handler handler : handlerList) {
                 if (handler.linkExists(newLink) && handler.linkHasDomain(newLink)) {
