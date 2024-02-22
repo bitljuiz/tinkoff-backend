@@ -30,9 +30,12 @@ public class StartCommand implements Command {
 
     @Override
     public SendMessage handle(Update update) {
+        SendMessage response;
         if (linkRepository.registerId(update.message().chat().id())) {
-            return new SendMessage(update.message().chat().id(), successfulStartCommandMessage);
+            response =  new SendMessage(update.message().chat().id(), successfulStartCommandMessage);
+        } else {
+            response =  new SendMessage(update.message().chat().id(), isAlreadyRegistered);
         }
-        return new SendMessage(update.message().chat().id(), isAlreadyRegistered);
+        return response;
     }
 }

@@ -16,7 +16,7 @@ public class ListCommand implements Command {
     public final String successfulListMessage = "Links that are tracking now: " + System.lineSeparator();
     public final String invalidListMessage = "You are not tracking any link now" + System.lineSeparator();
 
-    public static final String IS_NOT_REGISTERED = "You are not registered." + System.lineSeparator()
+    public final String isNotRegistered = "You are not registered." + System.lineSeparator()
         + "Use /start to register.";
 
     public ListCommand(LinkRepository linkRepository) {
@@ -41,7 +41,7 @@ public class ListCommand implements Command {
         try {
             links = linkRepository.getData(chatId);
         } catch (Exception ignored) {
-            return new SendMessage(chatId, IS_NOT_REGISTERED);
+            return new SendMessage(chatId, isNotRegistered);
         }
 
         StringBuilder linksInList = new StringBuilder();

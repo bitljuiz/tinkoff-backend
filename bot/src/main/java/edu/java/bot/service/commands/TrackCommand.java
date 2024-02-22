@@ -40,18 +40,23 @@ public class TrackCommand implements Command {
         Long chatId = update.message().chat().id();
         String[] messageParts = update.message().text().split("\\s+", 2);
 
+        SendMessage response;
+
         if (!linkRepository.containsId(chatId)) {
-            return new SendMessage(chatId, isNotRegistered);
+            response = new SendMessage(chatId, isNotRegistered);
+        } else if (messageParts.length < 2) {
+            response = new SendMessage(chatId, invalidFormatTrackMessage);
+        } else {
+            String newLink = updateHandlerService.isValid(messageParts[1]);
+            if (newLink == null) {
+                response = new SendMessage(chatId, invalidTrackMessage + messageParts[1]);
+            } else if (!linkRepository.addData(chatId, newLink)) {
+                response = new SendMessage(chatId, linkIsActuallyTracking + messageParts[1]);
+            } else {
+                response = new SendMessage(chatId, successfulTrackMessage + messageParts[1]);
+            }
         }
 
-        String newLink = updateHandlerService.isValid(messageParts[1]);
-        if (newLink == null) {
-            return new SendMessage(chatId, invalidTrackMessage + messageParts[1]);
-        }
-        if (!linkRepository.addData(chatId, newLink)) {
-            return new SendMessage(chatId, linkIsActuallyTracking + messageParts[1]);
-        }
-
-        return new SendMessage(chatId, successfulTrackMessage + messageParts[1]);
+        return response;
     }
 }
