@@ -7,26 +7,28 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UntrackCommand implements Command {
-    private final String UNTRACK_COMMAND = "/untrack";
-    private final String UNTRACK_COMMAND_DESCRIPTION = "is used to finish tracking the link";
-    private final String IS_NOT_REGISTERED = "You are not registered." + System.lineSeparator() +
-        "Use /start to register.";
-    private final String INVALID_FORMAT_UNTRACK_MESSAGE =
-        "Invalid link. You can try " + UNTRACK_COMMAND + " github.com";
-    private final String INVALID_UNTRACK_MESSAGE = "This link hadn't been tracking ";
-    private final String SUCCESSFUL_UNTRACK_MESSAGE = "Finish tracking the link ";
+    private final String untrackCommand = "/untrack";
+    private final String untrackCommandDescription = "is used to finish tracking the link";
+    private final String isNotRegistered = "You are not registered." + System.lineSeparator()
+        + "Use /start to register.";
+    private final String invalidFormatUntrackMessage =
+        "Invalid link. You can try " + untrackCommand + " github.com";
+    private final String invalidUntrackMessage = "This link hadn't been tracking ";
+    private final String successfulUntrackMessage = "Finish tracking the link ";
     private final LinkRepository linkRepository;
 
-    public UntrackCommand(LinkRepository linkRepository) { this.linkRepository = linkRepository; }
+    public UntrackCommand(LinkRepository linkRepository) {
+        this.linkRepository = linkRepository;
+    }
 
     @Override
     public String command() {
-        return UNTRACK_COMMAND;
+        return untrackCommand;
     }
 
     @Override
     public String description() {
-        return UNTRACK_COMMAND_DESCRIPTION;
+        return untrackCommandDescription;
     }
 
     @Override
@@ -34,18 +36,18 @@ public class UntrackCommand implements Command {
         Long chatId = update.message().chat().id();
 
         if (!linkRepository.containsId(chatId)) {
-            return new SendMessage(chatId, IS_NOT_REGISTERED);
+            return new SendMessage(chatId, isNotRegistered);
         }
 
         String[] messageParts = update.message().text().split("\\s+", 2);
 
         if (messageParts.length < 2) {
-            return new SendMessage(chatId, INVALID_FORMAT_UNTRACK_MESSAGE);
+            return new SendMessage(chatId, invalidFormatUntrackMessage);
         }
 
         if (linkRepository.removeData(chatId, messageParts[1])) {
-            return new SendMessage(chatId, SUCCESSFUL_UNTRACK_MESSAGE + messageParts[1]);
+            return new SendMessage(chatId, successfulUntrackMessage + messageParts[1]);
         }
-        return new SendMessage(chatId, INVALID_UNTRACK_MESSAGE + messageParts[1]);
+        return new SendMessage(chatId, invalidUntrackMessage + messageParts[1]);
     }
 }

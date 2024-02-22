@@ -22,8 +22,9 @@ public class LinkRepository {
     }
 
     public boolean registerId(Long chatId) {
-        if (links.containsKey(chatId))
+        if (links.containsKey(chatId)) {
             return false;
+        }
         links.computeIfAbsent(chatId, val -> new HashSet<>());
         return true;
     }

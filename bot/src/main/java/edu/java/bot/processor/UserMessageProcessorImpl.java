@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMessageProcessorImpl implements UserMessageProcessor {
     private final List<Command> commands;
-    private final String INVALID_COMMAND_MESSAGE = "I don't know the command ";
+    private final String invalidCommandMessage = "I don't know the command ";
 
     public UserMessageProcessorImpl(List<Command> commands) {
         this.commands = commands;
@@ -27,6 +27,6 @@ public class UserMessageProcessorImpl implements UserMessageProcessor {
                 return command.handle(update);
             }
         }
-        return new SendMessage(update.message().chat().id(), INVALID_COMMAND_MESSAGE + update.message().text());
+        return new SendMessage(update.message().chat().id(), invalidCommandMessage + update.message().text());
     }
 }

@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 public class ListCommand implements Command {
     private final LinkRepository linkRepository;
 
-    private final String LIST_COMMAND = "/list";
-    private final String LIST_COMMAND_DESCRIPTION = "shows a list of currently tracking links";
+    private final String listCommand = "/list";
+    private final String listCommandDescription = "shows a list of currently tracking links";
 
     public static final String SUCCESSFUL_LIST_MESSAGE = "Links that are tracking now: " + System.lineSeparator();
     public static final String INVALID_LIST_MESSAGE = "You are not tracking any link now" + System.lineSeparator();
 
-    public static final String IS_NOT_REGISTERED = "You are not registered." + System.lineSeparator() +
-        "Use /start to register.";
+    public static final String IS_NOT_REGISTERED = "You are not registered." + System.lineSeparator()
+        + "Use /start to register.";
 
     public ListCommand(LinkRepository linkRepository) {
         this.linkRepository = linkRepository;
@@ -25,12 +25,12 @@ public class ListCommand implements Command {
 
     @Override
     public String command() {
-        return LIST_COMMAND;
+        return listCommand;
     }
 
     @Override
     public String description() {
-        return LIST_COMMAND_DESCRIPTION;
+        return listCommandDescription;
     }
 
     @Override
