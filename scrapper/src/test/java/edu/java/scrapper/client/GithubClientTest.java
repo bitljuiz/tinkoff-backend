@@ -58,7 +58,7 @@ public class GithubClientTest {
         assertThat(client).isNotNull();
         assertThat(client.owner().id()).isEqualTo(117773229L);
         assertThat(client.owner().login()).isEqualTo("bitljuiz");
-        assertThat(client.pushTime().toString()).isEqualTo("2024-02-22T22:10:31Z");
+        assertThat(client.pushTime().toString()).isEqualTo("2024-02-25T20:36:21Z");
         assertThat(client.updateTime().toString()).isEqualTo("2024-02-05T15:03:32Z");
     }
 }
