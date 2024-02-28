@@ -2,11 +2,11 @@ package edu.java.scrapper.service;
 
 import edu.java.scrapper.responses.github.GithubResponse;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-@Component
+@Service
 public class GithubClientService {
     private final WebClient githubClient;
 

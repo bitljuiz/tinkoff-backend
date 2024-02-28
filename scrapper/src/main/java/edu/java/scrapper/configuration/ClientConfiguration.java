@@ -14,11 +14,11 @@ public class ClientConfiguration {
 
     @Bean
     public WebClient githubClient() {
-        return WebClient.create(applicationConfig.clientBaseUrl().githubBaseUrl());
+        return WebClient.create(applicationConfig.clientBaseUrl().github());
     }
 
     @Bean
     public WebClient stackOverflowClient() {
-        return WebClient.create(applicationConfig.clientBaseUrl().stackOverFlowBaseUrl());
+        return WebClient.create(applicationConfig.clientBaseUrl().stackoverflow());
     }
 }

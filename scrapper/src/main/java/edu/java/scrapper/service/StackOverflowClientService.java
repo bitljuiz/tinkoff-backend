@@ -2,11 +2,11 @@ package edu.java.scrapper.service;
 
 import edu.java.scrapper.responses.stackoverflow.StackOverflowResponse;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-@Component
+@Service
 public class StackOverflowClientService {
     private final WebClient stackOverflowClient;
 
